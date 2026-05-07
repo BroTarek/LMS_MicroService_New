@@ -182,62 +182,6 @@ const CourseDetailsPage = () => {
                             </div>
                         </section>
                         {/* END: CourseContentAccordion */}
-
-                        {/* BEGIN: PendingEnrollmentsSection */}
-                        {/* {user?.role === 'TEACHER' && (
-                            <section className="mb-16">
-                                <h2 className="text-2xl font-extrabold text-primary mb-8">Pending Student Requests</h2>
-                                {pendingEnrollments.length > 0 ? (
-                                    <div className="overflow-hidden bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm">
-                                        <table className="w-full text-left border-collapse">
-                                            <thead>
-                                                <tr className="bg-surface-container-low border-b border-outline-variant/30 text-xs font-extrabold uppercase tracking-widest text-on-surface-variant">
-                                                    <th className="px-6 py-4">Student Username</th>
-                                                    <th className="px-6 py-4">Request Date</th>
-                                                    <th className="px-6 py-4 text-right">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="divide-y divide-outline-variant/20">
-                                                {pendingEnrollments.map((enrollment) => (
-                                                    <tr key={enrollment.id} className="hover:bg-surface-container-low/50 transition-colors">
-                                                        <td className="px-6 py-5">
-                                                            <div className="flex items-center gap-3">
-                                                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
-                                                                    {enrollment.studentUsername.charAt(0).toUpperCase()}
-                                                                </div>
-                                                                <span className="font-bold text-on-surface">{enrollment.studentUsername}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="px-6 py-5 text-sm text-on-surface-variant">
-                                                            {new Date(enrollment.requestedAt).toLocaleDateString()}
-                                                        </td>
-                                                        <td className="px-6 py-5 text-right space-x-2">
-                                                            <button
-                                                                onClick={() => handleApprove(enrollment.id)}
-                                                                className="px-4 py-2 bg-primary/10 text-primary hover:bg-primary hover:text-on-primary rounded-full text-xs font-bold transition-all"
-                                                            >
-                                                                Accept
-                                                            </button>
-                                                            <button
-                                                                onClick={() => handleReject(enrollment.id)}
-                                                                className="px-4 py-2 bg-error-container/20 text-error hover:bg-error hover:text-on-error rounded-full text-xs font-bold transition-all"
-                                                            >
-                                                                Reject
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                ) : (
-                                    <div className="p-10 text-center bg-surface-container-low rounded-xl border border-dashed border-outline text-on-surface-variant italic">
-                                        No pending student requests at the moment.
-                                    </div>
-                                )}
-                            </section>
-                        )} */}
-                        {/* END: PendingEnrollmentsSection */}
                     </div>
                     
                     {/* BEGIN: RightSidebar */}

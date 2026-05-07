@@ -9,7 +9,8 @@ export default function Home() {
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchCourses = () => {
+    setLoading(true);
     courseApi.list()
       .then(data => {
         setCourses(data);
@@ -19,6 +20,10 @@ export default function Home() {
         console.error("Failed to fetch courses:", err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchCourses();
   }, []);
 
   const Categories: string[] = ["All", "Graphic Design", "Digital Marketing", "Business Management", "Content Creation", "Programming & Dev", "Personal Skills"]
@@ -64,7 +69,7 @@ export default function Home() {
             <div className="aspect-square rounded-[3rem] overflow-hidden shadow-2xl -rotate-3">
               <img className="w-full h-full object-cover"
                 alt="Students collaborating"
-                src="https://images.unsplash.com/photo-1523240715630-971c7e971440?q=80&w=800" />
+                src="https://www.kapture.cx/blog/wp-content/uploads/2022/04/Types-of-Knowledge-Management-Systems.jpg" />
             </div>
             <div
               className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-xl flex items-center gap-4 animate-bounce">
@@ -112,7 +117,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.length > 0 ? (
               courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+                <CourseCard key={course.id} course={course} onDelete={fetchCourses} />
               ))
             ) : (
               <div className="col-span-full text-center py-20 text-on-surface-variant">
@@ -131,7 +136,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {!loading && courses.slice(0, 3).map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <CourseCard key={course.id} course={course} onDelete={fetchCourses} />
           ))}
         </div>
         <div className="mt-16 text-center">

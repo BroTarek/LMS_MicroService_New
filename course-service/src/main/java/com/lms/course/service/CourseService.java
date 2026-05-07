@@ -33,9 +33,15 @@ public class CourseService {
     }
     
     @Transactional
-    public void deleteCourse(Long courseId, String teacherUsername) {
-        Course course = courseRepository.findByIdAndTeacherUsername(courseId, teacherUsername)
-                .orElseThrow(() -> new RuntimeException("Course not found or not owned by you"));
+    public void deleteCourse(Long courseId, String username, String role) {
+        Course course;
+        if ("ADMIN".equals(role)) {
+            course = courseRepository.findById(courseId)
+                    .orElseThrow(() -> new RuntimeException("Course not found"));
+        } else {
+            course = courseRepository.findByIdAndTeacherUsername(courseId, username)
+                    .orElseThrow(() -> new RuntimeException("Course not found or not owned by you"));
+        }
         courseRepository.delete(course);
     }
 

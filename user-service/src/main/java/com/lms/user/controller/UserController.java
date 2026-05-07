@@ -2,7 +2,6 @@ package com.lms.user.controller;
 
 import com.lms.user.dto.UserProfileResponse;
 import com.lms.user.dto.UserProfileUpdateRequest;
-import com.lms.user.entity.UserProfile;
 import com.lms.user.service.UserProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

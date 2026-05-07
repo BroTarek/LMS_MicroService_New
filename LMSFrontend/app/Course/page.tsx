@@ -43,7 +43,7 @@ const page = () => {
                                 {Array.from({ length: 9 }).map((accordionItem, i) => (<AccordionItem key={i} lesson={{
                                     id: 0,
                                     title: '',
-                                    content: undefined,
+                                    contentUrl: undefined,
                                     videoUrl: undefined
                                 }} index={0} />))}
                             </div>

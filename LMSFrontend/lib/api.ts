@@ -49,9 +49,9 @@ export const courseApi = {
   myCourses: () => apiRequest('/api/courses/my'),
   get: (id: string) => apiRequest(`/api/courses/${id}`),
   create: (data: any) => {
-    
     return apiRequest('/api/courses', { method: 'POST', body: JSON.stringify(data) })
-},
+  },
+  delete: (id: number) => apiRequest(`/api/courses/${id}`, { method: 'DELETE' }),
   addLesson: (courseId: string, data: any) => {
     console.log(data)
     return apiRequest(`/api/courses/${courseId}/lessons`, { method: 'POST', body: JSON.stringify(data) })

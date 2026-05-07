@@ -50,4 +50,9 @@ public class AuthController {
         String token = authHeader.replace("Bearer ", "");
         return ResponseEntity.ok(authService.validateToken(token));
     }
+    @GetMapping("/admin/check")
+    @com.lms.auth.annotation.RequireRole({"ADMIN"})
+    public ResponseEntity<String> adminCheck() {
+        return ResponseEntity.ok("Welcome, Admin!");
+    }
 }

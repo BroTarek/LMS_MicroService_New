@@ -76,8 +76,9 @@ public class CourseController {
     @DeleteMapping("/{id}")
     @RequireCourseOwner
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id,
-                                             @RequestHeader("X-Username") String username) {
-        courseService.deleteCourse(id, username);
+                                             @RequestHeader("X-Username") String username,
+                                             @RequestHeader("X-Role") String role) {
+        courseService.deleteCourse(id, username, role);
         return ResponseEntity.ok().build();
     }
 
