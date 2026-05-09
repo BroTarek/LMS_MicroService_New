@@ -1,4 +1,4 @@
-import 'course-service-entities'
+
 
 context Course
 -- The title of a course must not be empty

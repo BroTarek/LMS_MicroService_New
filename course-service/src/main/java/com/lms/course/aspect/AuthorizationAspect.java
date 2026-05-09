@@ -1,9 +1,9 @@
 package com.lms.course.aspect;
 
-import com.lms.course.annotation.RequireCourseOwner;
-import com.lms.course.annotation.RequireRole;
-import com.lms.course.entity.Course;
-import com.lms.course.repository.CourseRepository;
+// import com.lms.course.annotation.RequireCourseOwner;
+// import com.lms.course.annotation.RequireRole;
+// import com.lms.course.entity.Course;
+// import com.lms.course.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
