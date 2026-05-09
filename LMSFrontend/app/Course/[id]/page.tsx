@@ -109,7 +109,7 @@ const CourseDetailsPage = () => {
     const isApproved = enrollment?.status === 'APPROVED';
     const isRejected = enrollment?.status === 'REJECTED';
     const isTeacher = user?.role === 'TEACHER' && (course.teacherUsername === user?.username || course.instructorName === user?.username); 
-    const canSeeContent = isTeacher || isApproved;
+    const canSeeContent = isTeacher || isApproved || user?.role === 'ADMIN';
 
     return (
         <>
@@ -142,11 +142,13 @@ const CourseDetailsPage = () => {
                         </section>
                         {/* END: InstructorCard */}
                         
-                       <DataTable 
-                         columns={columns} 
-                         data={mockEnrolledStudents} 
-                         meta={{ handleApprove, handleReject }} 
-                       />
+                       {(isTeacher || user?.role === 'ADMIN') && (
+                           <DataTable 
+                             columns={columns} 
+                             data={mockEnrolledStudents || []} 
+                             meta={{ handleApprove, handleReject }} 
+                           />
+                       )}
                        
                         {/* BEGIN: CourseContentAccordion */}
                         <section className="mb-16">
@@ -155,7 +157,14 @@ const CourseDetailsPage = () => {
                                 {canSeeContent ? (
                                     course.lessons && course.lessons.length > 0 ? (
                                         course.lessons.map((lesson: any, i: number) => (
-                                            <AccordionItem key={lesson.id} lesson={lesson} index={i + 1} />
+                                            <AccordionItem 
+                                                key={lesson.id} 
+                                                lesson={lesson} 
+                                                index={i + 1} 
+                                                courseId={id as string}
+                                                canDelete={isTeacher || user?.role === 'ADMIN'}
+                                                onDelete={() => window.location.reload()}
+                                            />
                                         ))
                                     ) : (
                                         <div className="p-10 text-center bg-surface-container-low rounded-xl border border-dashed border-outline">
@@ -193,7 +202,7 @@ const CourseDetailsPage = () => {
                             </p>
                             
                             <div className="space-y-4 mb-8">
-                                {user?.role === 'TEACHER' && (
+                                {isTeacher && (
                                     <button
                                         onClick={() => setShowModal(true)} 
                                         className="w-full py-4 bg-primary text-on-primary font-extrabold rounded-xl hover:opacity-90 transition-all shadow-md"
@@ -201,6 +210,23 @@ const CourseDetailsPage = () => {
                                         <Plus className="inline-block mr-2" />
                                         Upload Lesson
                                     </button>
+                                )}
+                                {(isTeacher || user?.role === 'ADMIN') && (
+                                    <button
+                                            onClick={async () => {
+                                                if (window.confirm('Are you sure you want to delete this course?')) {
+                                                    try {
+                                                        await courseApi.delete(course.id);
+                                                        window.location.href = '/';
+                                                    } catch (err) {
+                                                        alert('Failed to delete course');
+                                                    }
+                                                }
+                                            }}
+                                            className="w-full py-4 bg-red-600 text-white font-extrabold rounded-xl hover:bg-red-700 transition-all shadow-md"
+                                        >
+                                            Delete Course
+                                        </button>
                                 )}
                                 
                                 {user?.role === 'STUDENT' && (

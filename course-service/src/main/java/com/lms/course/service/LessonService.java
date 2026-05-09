@@ -27,6 +27,23 @@ public class LessonService {
         lesson.setTitle(request.getTitle());
         lesson.setContentUrl(request.getContentUrl());
         lesson.setOrderIndex(request.getOrderIndex());
+        
+        // The Trick: random number * material size (in MB)
+        if (request.getFileSize() != null && request.getFileSize() > 0) {
+            double sizeInMb = request.getFileSize() / 1024.0 / 1024.0;
+            int extraDuration = (int) Math.ceil(sizeInMb * Math.random() * 5); // up to 5 hours per MB randomly
+            // Ensure at least 1 hour is added if there is a file
+            if (extraDuration == 0) extraDuration = 1;
+            
+            Integer currentDuration = course.getDurationHours();
+            if (currentDuration == null) currentDuration = 0;
+            
+            course.setDurationHours(currentDuration + extraDuration);
+            // courseRepository.save(course) is not strictly needed if Course is already managed, 
+            // but we rely on Cascade or EntityManager dirty checking. We'll save it to be safe.
+            // Wait, we don't have courseRepository here. But it's @Transactional, so it will be saved!
+        }
+        
         return lessonRepository.save(lesson);
     }
     
@@ -56,9 +73,9 @@ public class LessonService {
     }
 
     @Transactional
-    public void deleteLesson(Long courseId, Long lessonId, String teacherUsername) {
+    public void deleteLesson(Long courseId, Long lessonId, String teacherUsername, String role) {
         Course course = courseService.getCourse(courseId);
-        if (!course.getTeacherUsername().equals(teacherUsername)) {
+        if (!"ADMIN".equals(role) && !course.getTeacherUsername().equals(teacherUsername)) {
             throw new RuntimeException("You are not the owner of this course");
         }
         Lesson lesson = getLesson(lessonId);

@@ -48,8 +48,9 @@ public class LessonController {
     @RequireCourseOwner
     public ResponseEntity<Void> deleteLesson(@PathVariable Long courseId,
                                              @PathVariable Long lessonId,
-                                             @RequestHeader(value = "X-Username", required = false) String username) {
-        lessonService.deleteLesson(courseId, lessonId, username);
+                                             @RequestHeader(value = "X-Username", required = false) String username,
+                                             @RequestHeader(value = "X-Role", required = false) String role) {
+        lessonService.deleteLesson(courseId, lessonId, username, role);
         return ResponseEntity.ok().build();
     }
 }

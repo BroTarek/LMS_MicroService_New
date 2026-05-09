@@ -44,7 +44,9 @@ public class CourseController {
         boolean canSeeLessons = false;
         
         if (username != null && role != null) {
-            if ("TEACHER".equals(role)) {
+            if ("ADMIN".equals(role)) {
+                canSeeLessons = true;
+            } else if ("TEACHER".equals(role)) {
                 if (course.getTeacherUsername().equals(username)) {
                     canSeeLessons = true;
                 }

@@ -41,11 +41,12 @@ const Modal = ({ handleModalVisisbility, type = 'course', courseId }: ModalProps
                 await courseApi.addLesson(courseId, {
                     title: formData.title,
                     contentUrl: finalUrl,
-                    orderIndex: formData.orderIndex
+                    orderIndex: formData.orderIndex,
+                    fileSize: file ? file.size : 0
                 });
             }
             handleModalVisisbility();
-            // window.location.reload();
+            window.location.reload();
         } catch (err) {
             console.error("Failed to save:", err);
             alert("Failed to save. Please try again.");

@@ -13,4 +13,6 @@ public class CreateLessonRequest {
     
     @NotNull
     private Integer orderIndex;
+    
+    private Long fileSize;
 }

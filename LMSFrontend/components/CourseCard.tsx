@@ -90,31 +90,28 @@ const CourseCard = ({ course, onDelete }: CourseCardProps) => {
                     </Menubar>
                 </div>
 
-                <div className="aspect-[16/9] overflow-hidden">
-                    <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        alt={course.title}
-                        src={course.courseImage || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800"} />
-                </div>
-                <div className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                        <img className="w-10 h-10 rounded-full object-cover"
-                            alt={course.instructorName || course.teacherUsername}
-                            src={course.instructorImage || "https://ui-avatars.com/api/?name=" + (course.instructorName || course.teacherUsername)} />
-                        <span className="text-on-surface-variant font-medium text-sm">{course.instructorName || course.teacherUsername}</span>
+                <Link href={`/Course/${course.id}`} className="block">
+                    <div className="aspect-[16/9] overflow-hidden">
+                        <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            alt={course.title}
+                            src={course.courseImage || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800"} />
                     </div>
-                    <h3 className="text-xl font-bold text-primary mb-6 leading-snug">{course.title}</h3>
-                    <div className="flex justify-between items-center pt-4 border-t border-surface-container">
-                        <div className="flex items-center gap-2 text-on-surface-variant text-sm">
-                            <span className="material-symbols-outlined text-sm">schedule</span>
-                            {course.durationHours || 10} Hours
+                    <div className="p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                            <img className="w-10 h-10 rounded-full object-cover"
+                                alt={course.instructorName || course.teacherUsername}
+                                src={course.instructorImage || "https://ui-avatars.com/api/?name=" + (course.instructorName || course.teacherUsername)} />
+                            <span className="text-on-surface-variant font-medium text-sm">{course.instructorName || course.teacherUsername}</span>
                         </div>
-                        {/* <div className="flex items-center gap-1 text-on-surface-variant text-sm">
-                            <span className="material-symbols-outlined text-sm text-yellow-500"
-                                style={{ fontVariationSettings: "FILL 1" }}>star</span>
-                            {course.rating || 4.5} ({course.reviewCount || "100"})
-                        </div> */}
+                        <h3 className="text-xl font-bold text-primary mb-6 leading-snug">{course.title}</h3>
+                        <div className="flex justify-between items-center pt-4 border-t border-surface-container">
+                            <div className="flex items-center gap-2 text-on-surface-variant text-sm">
+                                <span className="material-symbols-outlined text-sm">schedule</span>
+                                {course.durationHours || 10} Hours
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </Link>
             </div>
         </>
     )

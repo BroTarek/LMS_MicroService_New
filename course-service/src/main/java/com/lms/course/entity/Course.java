@@ -39,6 +39,9 @@ public class Course {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
+    @Column(name = "duration_hours")
+    private Integer durationHours = 0;
+    
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
     
