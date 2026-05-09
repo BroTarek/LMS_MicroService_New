@@ -1,5 +1,5 @@
 package com.lms.course.controller;
-
+import com.lms.course.annotation.RequireRole;
 import com.lms.course.annotation.RequireCourseOwner;
 import com.lms.course.dto.CreateCourseRequest;
 import com.lms.course.entity.Course;
@@ -20,6 +20,7 @@ public class CourseController {
     private final EnrollmentService enrollmentService;
     
     @PostMapping
+    @RequireRole({"TEACHER"})
     public ResponseEntity<Course> createCourse(@Valid @RequestBody CreateCourseRequest request,
                                                @RequestHeader("X-Username") String username) {
         return ResponseEntity.ok(courseService.createCourse(request, username));
