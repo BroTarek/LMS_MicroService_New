@@ -31,7 +31,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${manrope.className} antialiased`}>
+      <body className={`${manrope.className} antialiased`} suppressHydrationWarning>
         <NavBar/>
         {children}
         <Footer/>

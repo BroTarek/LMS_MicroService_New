@@ -9,9 +9,14 @@ interface AccordionItemProps {
         videoUrl?: string;
     },
     index: number;
+    courseId?: string | number;
+    canDelete?: boolean;
+    onDelete?: () => void;
 }
 
-const AccordionItem = ({ lesson, index }: AccordionItemProps) => {
+import { courseApi } from '@/lib/api'
+
+const AccordionItem = ({ lesson, index, courseId, canDelete, onDelete }: AccordionItemProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [downloading, setDownloading] = useState(false);
 
@@ -75,11 +80,29 @@ const AccordionItem = ({ lesson, index }: AccordionItemProps) => {
     const isInternalFile = lesson.contentUrl?.startsWith('/api/uploads') || 
                           lesson.contentUrl?.includes('/api/uploads');
 
+    const handleDelete = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!courseId) return;
+        if (window.confirm('Are you sure you want to delete this lesson?')) {
+            try {
+                await courseApi.deleteLesson(courseId, lesson.id);
+                if (onDelete) {
+                    onDelete();
+                } else {
+                    window.location.reload();
+                }
+            } catch (err) {
+                console.error("Failed to delete lesson:", err);
+                alert("Failed to delete lesson. You might not have permission.");
+            }
+        }
+    };
+
     return (
         <>
             <div className={`accordion-item border border-outline-variant/30 rounded-xl overflow-hidden bg-surface-container-lowest shadow-sm ${isOpen ? 'ring-2 ring-primary/20' : ''}`}>
-                <button
-                    className="w-full flex items-center justify-between p-5 text-left bg-surface-container-lowest hover:bg-surface-container-low transition-colors"
+                <div
+                    className="w-full flex items-center justify-between p-5 text-left bg-surface-container-lowest hover:bg-surface-container-low transition-colors cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)} >
                     <div className="flex items-center gap-4">
                         <span
@@ -87,12 +110,23 @@ const AccordionItem = ({ lesson, index }: AccordionItemProps) => {
                         >{index < 10 ? `0${index}` : index}</span>
                         <span className="font-bold text-primary">{lesson.title}</span>
                     </div>
-                    <svg className={`w-5 h-5 text-outline transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"
-                            strokeWidth="2"></path>
-                    </svg>
-                </button>
+                    <div className="flex items-center gap-3">
+                        {canDelete && (
+                            <button
+                                onClick={handleDelete}
+                                className="w-8 h-8 flex items-center justify-center rounded-full text-red-500 hover:bg-red-50 transition-colors"
+                                title="Delete Lesson"
+                            >
+                                <span className="material-symbols-outlined text-sm">delete</span>
+                            </button>
+                        )}
+                        <svg className={`w-5 h-5 text-outline transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"
+                                strokeWidth="2"></path>
+                        </svg>
+                    </div>
+                </div>
                 {isOpen && (
                     <div className="accordion-content border-t border-outline-variant/30 bg-surface-container-low/30">
                         <div className="p-6">

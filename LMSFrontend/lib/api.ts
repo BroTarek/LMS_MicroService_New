@@ -64,6 +64,7 @@ export const courseApi = {
     console.log(data)
     return apiRequest(`/api/courses/${courseId}/lessons`, { method: 'POST', body: JSON.stringify(data) })
   },
+  deleteLesson: (courseId: string | number, lessonId: number) => apiRequest(`/api/courses/${courseId}/lessons/${lessonId}`, { method: 'DELETE' }),
 };
 
 export const enrollApi = {

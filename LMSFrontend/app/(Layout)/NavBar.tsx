@@ -41,9 +41,9 @@ const NavBar = () => {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xs">
-                  {user.username.charAt(0).toUpperCase()}
+                  {user.username ? user.username.charAt(0).toUpperCase() : 'U'}
                 </div>
-                <span className="text-sm font-bold text-primary">{user.username}</span>
+                <span className="text-sm font-bold text-primary">{user.username || 'User'}</span>
               </div>
               <button 
                 onClick={handleLogout}
