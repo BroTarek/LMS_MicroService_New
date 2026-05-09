@@ -44,6 +44,14 @@ export const authApi = {
   getProfile: () => apiRequest('/api/users/me'),
 };
 
+export const teacherApi = {
+  myCourses: () => apiRequest('/api/teachers/my-courses'),
+};
+
+export const studentApi = {
+  myCourses: () => apiRequest('/api/students/my-courses'),
+};
+
 export const courseApi = {
   list: () => apiRequest('/api/courses'),
   myCourses: () => apiRequest('/api/courses/my'),

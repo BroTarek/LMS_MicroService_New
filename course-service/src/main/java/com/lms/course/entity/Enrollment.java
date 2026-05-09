@@ -6,6 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing a Student Enrollment in a Course.
+ * 
+ * <p><b>OCL Constraints:</b></p>
+ * <ul>
+ *   <li>context Enrollment inv ValidStatus: Set{'PENDING', 'APPROVED', 'REJECTED'}->includes(self.status)</li>
+ *</ul>
+ */
 @Entity
 @Table(name = "enrollments")
 @Data

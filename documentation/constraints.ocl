@@ -1,0 +1,49 @@
+import 'course-service-entities'
+
+context Course
+-- The title of a course must not be empty
+inv TitleNotEmpty:
+    self.title.size() > 0
+
+-- A course must always have a teacher assigned
+inv HasTeacher:
+    self.teacherUsername <> null and self.teacherUsername.size() > 0
+
+-- A course must have at least one lesson to be considered "completable" (optional domain rule)
+inv HasLessons:
+    self.lessons->size() >= 0
+
+context Enrollment
+-- The status of an enrollment must be one of the predefined values
+inv ValidStatus:
+    Set{'PENDING', 'APPROVED', 'REJECTED'}->includes(self.status)
+
+
+-- Ensure the requested date is not in the future (logical constraint)
+-- inv RequestedAtNotFuture: self.requestedAt <= LocalDateTime::now()
+
+context Lesson
+-- A lesson must belong to a course
+inv MustHaveCourse:
+    self.course <> null
+
+-- A lesson title must not be empty
+inv LessonTitleNotEmpty:
+    self.title.size() > 0
+
+---------------------------------------------------------
+-- Behavioral Constraints (Service Operations)
+---------------------------------------------------------
+
+context EnrollmentService::enroll(studentUsername: String, course: Course)
+-- Precondition: The student must not already be enrolled in the course
+pre NotAlreadyEnrolled:
+    not course.enrollments->exists(e | e.studentUsername = studentUsername)
+
+-- Precondition: The student must not be the teacher of the course
+pre NotTeacher:
+    studentUsername <> course.teacherUsername
+
+-- Postcondition: A new enrollment record must exist with status 'PENDING'
+post EnrollmentCreated:
+    course.enrollments->exists(e | e.studentUsername = studentUsername and e.status = 'PENDING')

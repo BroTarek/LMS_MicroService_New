@@ -8,6 +8,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity representing a Course in the LMS.
+ * 
+ * <p><b>OCL Constraints:</b></p>
+ * <ul>
+ *   <li>context Course inv TitleNotEmpty: self.title.size() > 0</li>
+ *   <li>context Course inv HasTeacher: self.teacherUsername <> null and self.teacherUsername.size() > 0</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "courses")
 @Data

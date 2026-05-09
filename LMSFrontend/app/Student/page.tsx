@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import CourseWithProgress from '@/components/CourseWithProgress'
 import React from 'react'
-import { enrollApi, authApi } from "@/lib/api";
+import { studentApi, authApi } from "@/lib/api";
 import Link from "next/link";
 
 const StudentDashboard = () => {
@@ -20,7 +20,7 @@ const StudentDashboard = () => {
                 });
                 setUser(profile);
 
-                const courses = await enrollApi.myCourses();
+                const courses = await studentApi.myCourses();
                 setEnrolledCourses(courses);
             } catch (err) {
                 console.error("Failed to fetch student data:", err);

@@ -14,7 +14,8 @@
 6. [How to Run](#-how-to-run)
 7. [How to Work on a Specific Service](#-how-to-work-on-a-specific-service)
 8. [Key Concepts You Need to Know](#-key-concepts-you-need-to-know)
-9. [Common Commands](#-common-commands)
+9. [Object Constraint Language (OCL)](#-object-constraint-language-ocl)
+10. [Common Commands](#-common-commands)
 
 ---
 
@@ -293,6 +294,25 @@ When a user logs out, their JWT is added to a **blacklist in Redis**. Since JWTs
 
 ### What is Lombok?
 A Java library that auto-generates repetitive code. Instead of writing `getEmail()`, `setEmail()`, etc. by hand, you just annotate your class with `@Getter @Setter` or `@Data`.
+
+---
+
+## 📐 Object Constraint Language (OCL)
+
+This project uses **OCL** to formally specify business rules and constraints. This reduces ambiguity in the system documentation and provides a clear reference for developers.
+
+### Where to find OCL?
+- **Formal Specification:** [documentation/constraints.ocl](file:///d:/LMS/Backend/LMS_MicroService/documentation/constraints.ocl)
+- **Inline Documentation:** OCL constraints are also documented directly in the entity classes (e.g., [Course.java](file:///d:/LMS/Backend/LMS_MicroService/course-service/src/main/java/com/lms/course/entity/Course.java), [Enrollment.java](file:///d:/LMS/Backend/LMS_MicroService/course-service/src/main/java/com/lms/course/entity/Enrollment.java)) as Javadoc comments.
+
+### Key Constraints Implemented:
+- **Invariants:** 
+    - Courses must have a title and an assigned teacher.
+    - Students cannot enroll in courses they are teaching.
+- **Pre-conditions:**
+    - A student must not already be enrolled in a course to request a new enrollment.
+- **Post-conditions:**
+    - After an enrollment request, the status must be set to `PENDING`.
 
 ---
 

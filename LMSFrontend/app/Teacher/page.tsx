@@ -4,7 +4,7 @@ import CourseCard from '@/components/CourseCard'
 import Modal from '@/components/Modal'
 import { Plus } from 'lucide-react'
 import React from 'react'
-import { courseApi, authApi } from "@/lib/api";
+import { courseApi, authApi, teacherApi, enrollApi } from "@/lib/api";
 
 const TeacherDashboard = () => {
     const [user, setUser] = useState<any>(null);
@@ -15,7 +15,7 @@ const TeacherDashboard = () => {
 
     const fetchCoursesAndRequests = async () => {
         try {
-            const courses = await courseApi.myCourses();
+            const courses = await teacherApi.myCourses();
             setMyCourses(courses);
 
             // Fetch pending enrollments for all courses

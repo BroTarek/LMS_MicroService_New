@@ -19,6 +19,15 @@ public class EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
     private final CourseService courseService;
     
+    /**
+     * Request enrollment for a student in a course.
+     * 
+     * <p><b>OCL Constraints:</b></p>
+     * <ul>
+     *   <li>pre NotAlreadyEnrolled: not self.enrollmentRepository.findByCourseIdAndStudentUsername(courseId, studentUsername).isPresent()</li>
+     *   <li>post EnrollmentCreated: result.status = 'PENDING' and result.studentUsername = studentUsername</li>
+     * </ul>
+     */
     @Transactional
     public Enrollment requestEnrollment(Long courseId, String studentUsername) {
         Course course = courseService.getCourse(courseId);
